@@ -60,12 +60,12 @@ bool Sentinel::init_watchdog() {
 
 
 bool Sentinel::is_process_alive(const std::string& pid_path) {
-    std::ifstream pid_file;
-    std::string pid_str;
-    pid_file.open(pid_path);
-    if (!pid_file.is_open() || pid_file.fail())
-        return false;
+    std::ifstream pid_file(pid_path.c_str());
+    if (pid_file.fail())
+        return true;  // if pid file does not exist, the process was most likely
+                      // intentionally stopped, report as if everything is ok
 
+    std::string pid_str;
     std::getline(pid_file, pid_str);
     pid_file.close();
     int pid;
