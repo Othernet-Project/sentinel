@@ -18,7 +18,7 @@ namespace logging {
         current_level = chosen_level;
     }
 
-    void open(std::string app_name) {
+    void open(const std::string& app_name) {
         openlog(app_name.c_str(), LOG_PID, LOG_USER);
     }
 
@@ -26,7 +26,7 @@ namespace logging {
         closelog();
     }
 
-    void log(Level chosen_level, std::string message) {
+    void log(Level chosen_level, const std::string& message) {
         if (chosen_level <= current_level) {
             switch (chosen_level) {
                 case CRITICAL:
@@ -53,23 +53,23 @@ namespace logging {
         }
     }
 
-    void critical(std::string message) {
+    void critical(const std::string& message) {
         log(CRITICAL, message);
     }
 
-    void error(std::string message) {
+    void error(const std::string& message) {
         log(ERROR, message);
     }
 
-    void warning(std::string message) {
+    void warning(const std::string& message) {
         log(WARNING, message);
     }
 
-    void info(std::string message) {
+    void info(const std::string& message) {
         log(INFO, message);
     }
 
-    void debug(std::string message) {
+    void debug(const std::string& message) {
         log(DEBUG, message);
     }
 }  // namespace logging
