@@ -59,11 +59,11 @@ bool Sentinel::init_watchdog() {
 }
 
 
-bool Sentinel::is_process_alive(const std::string& pid_path) {
+bool Sentinel::is_process_dead(const std::string& pid_path) {
     std::ifstream pid_file(pid_path.c_str());
     if (pid_file.fail())
-        return true;  // if pid file does not exist, the process was most likely
-                      // intentionally stopped, report as if everything is ok
+        return false;  // if pid file does not exist, the process was most
+                       // likely intentionally stopped, report no issues
 
     std::string pid_str;
     std::getline(pid_file, pid_str);
@@ -72,12 +72,12 @@ bool Sentinel::is_process_alive(const std::string& pid_path) {
     try {
         pid = std::stoi(pid_str);
     } catch (const std::invalid_argument&) {
-        return false;
+        return true;
     } catch (const std::out_of_range&) {
-        return false;
+        return true;
     }
     // sending the ``0`` signal to any pid just checks if the process is alive
-    return kill(pid, SIGNAL_CHECK) == ALIVE;
+    return kill(pid, SIGNAL_CHECK) != ALIVE;
 }
 
 
@@ -106,7 +106,7 @@ int Sentinel::watch() {
         for (auto it = config_.begin(); it != config_.end(); ++it) {
             pid_path = it->first;
             start_cmd = it->second;
-            if (!is_process_alive(pid_path)) {
+            if (is_process_dead(pid_path)) {
                 logging::error("Process under: " + pid_path + " not alive.");
 
                 if (max_retries_ > DEFAULT_MAX_RETRIES &&

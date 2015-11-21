@@ -36,7 +36,7 @@ class Sentinel {
     bool init_watchdog();
     int watch();
     void keep_system_alive();
-    bool is_process_alive(const std::string&);
+    bool is_process_dead(const std::string&);
     void start_process(const std::string&, const std::string&);
     int stop();
 
