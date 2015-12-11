@@ -2,6 +2,7 @@
 // Some rights reserved.
 // This software is free software licensed under the terms of GPLv3. See COPYING
 // file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
+#include <array>
 #include <iostream>
 #include <string>
 #include <vector>
