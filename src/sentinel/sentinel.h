@@ -36,12 +36,15 @@ class Sentinel {
     bool init_watchdog();
     int watch();
     void keep_system_alive();
-    bool is_process_dead(const std::string&);
-    void start_process(const std::string&, const std::string&);
+    bool is_process_dead(const std::string& pid_path);
+    void start_process(const std::string& cmd, const std::string& pid_path);
     int stop();
 
  public:
-    explicit Sentinel(const std::string&, const std::string&, int, int);
+    explicit Sentinel(const std::string& config_path,
+                      const std::string& watchdog_path,
+                      int check_interval,
+                      int max_retries);
     int start();
 };
 

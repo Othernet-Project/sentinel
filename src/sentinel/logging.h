@@ -17,14 +17,14 @@ namespace logging {
 
     extern Level current_level;
 
-    void open(const std::string&);
-    void set_level(Level);
+    void open(const std::string& app_name);
+    void set_level(Level chosen_level);
     void close();
-    void log(Level, const std::string&);
-    void critical(const std::string&);
-    void error(const std::string&);
-    void warning(const std::string&);
-    void info(const std::string&);
-    void debug(const std::string&);
+    void log(Level chosen_level, const std::string& message);
+    void critical(const std::string& message);
+    void error(const std::string& message);
+    void warning(const std::string& message);
+    void info(const std::string& message);
+    void debug(const std::string& message);
 }  // namespace logging
 #endif  // SENTINEL_LOGGING_H_
